@@ -4,46 +4,37 @@ using namespace std;
 class Solution
 {
 public:
-	// int validClose()
+	vector<char> stackVec;
 
 	bool isValid(string s)
 	{
-		int x = 1;
-		for (int i = 1; i < s.length(); i++)
+		for (int i = 0; i < s.length(); i++)
 		{
 			if (s[i] == '(' || s[i] == '{' || s[i] == '[')
 			{
-				x++;
+				stackVec.push_back(s[i]);
 				continue;
 			}
 			switch (s[i])
 			{
 			case ')':
-				cout << s[x] << " :s[x-1] " << s[i] << " :s[i]" << endl;
-				if (s[i - 1] == '[' || s[i - 1] == '{')
+				if (stackVec.back() == '[' || stackVec.back() == '{' || stackVec.empty())
 					return false;
-				x--;
+				stackVec.pop_back();
 				break;
 			case ']':
-				cout << s[x] << " :s[x-1] " << s[i] << " :s[i]" << endl;
-				if (s[i - 1] == '(' || s[i - 1] == '{')
+				if (stackVec.back() == '(' || stackVec.back() == '{' || stackVec.empty())
 					return false;
-				x--;
+				stackVec.pop_back();
 				break;
 			case '}':
-				cout << s[x] << " :s[x-1] " << s[i] << " :s[i]" << endl;
-				if (s[i - 1] == '[' || s[i - 1] == '(')
+				if (stackVec.back() == '[' || stackVec.back() == '(' || stackVec.empty())
 					return false;
-				x--;
+				stackVec.pop_back();
 				break;
 			}
-			if (x < 0)
-				return false;
-
-			cout << x << " " << s[i] << endl;
 		}
-
-		if (x == 0)
+		if (stackVec.empty())
 			return true;
 		else
 			return false;
@@ -53,6 +44,6 @@ public:
 int main(int argc, char const *argv[])
 {
 	Solution S;
-	cout << S.isValid("({{{{}}}))");
+	cout << S.isValid("(){}}{");
 	return 0;
 }
