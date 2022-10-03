@@ -5,7 +5,6 @@ def minCost(colors: str, neededTime: list[int]) -> int:
 	cost = 0
 	for index in range(1, n):
 		if colors[index - 1] == colors[index]:
-			# cost = cost+neededTime[index] if neededTime[index] < neededTime[index+1]  else cost+neededTime[index+1]
 			cost = cost+min(neededTime[index-1], neededTime[index])
 			if neededTime[index-1] > neededTime[index]:
 				neededTime[index-1], neededTime[index] = neededTime[index],  neededTime[index-1]
