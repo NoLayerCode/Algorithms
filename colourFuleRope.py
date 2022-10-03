@@ -3,10 +3,13 @@
 def minCost(colors: str, neededTime: list[int]) -> int:
 	n = len(colors)
 	cost = 0
-	for index in range(0, n-1):
-		if colors[index] == colors[index + 1]:
-			cost = cost+neededTime[index] if neededTime[index] < neededTime[index+1]  else cost+neededTime[index+1]
+	for index in range(1, n):
+		if colors[index - 1] == colors[index]:
+			# cost = cost+neededTime[index] if neededTime[index] < neededTime[index+1]  else cost+neededTime[index+1]
+			cost = cost+min(neededTime[index-1], neededTime[index])
+			if neededTime[index-1] > neededTime[index]:
+				neededTime[index-1], neededTime[index] = neededTime[index],  neededTime[index-1]
 	print(cost)
 
 
-minCost('aabaa', [1, 2, 3, 4, 1])
+minCost('aaabbbabbbb', [3, 5, 10, 7, 5, 3, 5, 5, 4, 8, 1])
